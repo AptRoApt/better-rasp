@@ -150,3 +150,11 @@ func (s *Storage) GetGroups(ctx context.Context, faculty models.Faculty, course 
 	s.log.WithField("count", len(groups)).Debug("Retrieved groups")
 	return groups, nil
 }
+
+func (s *Storage) AddGroups(ctx context.Context, groups []models.Group) error {
+
+}
+
+func (s *Storage) GetAllGroups() []models.Group {
+
+}

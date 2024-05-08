@@ -1,7 +1,7 @@
 package main
 
-// groups id name
-// teachers id name
-// buildings id num address
-// rooms id bnum num
-// lessons
+func main() {
+	//Подключение storage
+	//Запуск и настройка (время запуска) парсеров
+	//Запуск сервера
+}
