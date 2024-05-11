@@ -2,7 +2,6 @@ package storage
 
 import (
 	"database/sql"
-	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -66,13 +65,24 @@ func (s *Storage) Close() {
 
 func (s *Storage) executeMigrationScript(filename string) error {
 	filePath := filepath.Join("migrations", filename)
+	tx, err := s.pool.Begin()
+	if err != nil {
+		return fmt.Errorf("ошибка при создании транзакции: %w", err)
+	}
+
 	query, err := os.ReadFile(filePath)
 	if err != nil {
 		return fmt.Errorf("ошибка при чтении файла с миграцией: %w", err)
 	}
-
-	_, err = s.pool.Exec(string(query))
-	return errors.Join(errors.New("ошибка при выполнении миграции"), err)
+	_, err = tx.Exec(string(query))
+	if err != nil {
+		return fmt.Errorf("ошибка при проведении транзакции: %w", err)
+	}
+	err = tx.Commit()
+	if err != nil {
+		return fmt.Errorf("ошибка при коммите транзакции: %w", err)
+	}
+	return nil
 }
 
 func (s *Storage) InitDatabase() error {
