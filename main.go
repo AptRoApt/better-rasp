@@ -23,3 +23,4 @@ func main() {
 	parser := parser.New(&storage)
 	parser.Start()
 }
+
