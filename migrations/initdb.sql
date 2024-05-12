@@ -68,15 +68,17 @@ CREATE TABLE IF NOT EXISTS disciplines (
 );
 
 CREATE TABLE IF NOT EXISTS lessons (
-    id BIGINT PRIMARY KEY,
-    date TIME NOT NULL,
+    id SERIAL PRIMARY KEY,
+    reaid BIGINT,
+    date DATE NOT NULL,
     lesson_num INTEGER REFERENCES lesson_time,
     lesson_type_id INTEGER REFERENCES lesson_types,
     discipline_id INTEGER REFERENCES disciplines,
     room_id INTEGER REFERENCES rooms,
     subgroup_num INTEGER NOT NULL,
     cathedra_id INTEGER REFERENCES cathedras,
-    is_commission BOOLEAN DEFAULT FALSE
+    is_commission BOOLEAN DEFAULT FALSE,
+    UNIQUE (reaid, room_id)
 );
 
 CREATE TABLE IF NOT EXISTS m2m_groups_lessons (
@@ -85,8 +87,8 @@ CREATE TABLE IF NOT EXISTS m2m_groups_lessons (
     PRIMARY KEY(group_id, lesson_id)
 );
 
-CREATE TABLE IF NOT EXISTS m2m_teachers_cathedras (
+CREATE TABLE IF NOT EXISTS m2m_teachers_lessons (
     teacher_id INTEGER REFERENCES teachers,
-    cathedra_id INTEGER REFERENCES cathedras,
-    PRIMARY KEY (teacher_id, cathedra_id)
+    lesson_id INTEGER REFERENCES lessons,
+    PRIMARY KEY (teacher_id, lesson_id)
 );

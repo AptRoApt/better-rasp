@@ -64,7 +64,7 @@ func New(s *storage.Storage) Parser {
 
 func (p *Parser) Start() {
 	p.GetGroups()
-	p.GetSchedule()
+	go p.GetSchedule()
 	p.scheduler.Start()
 }
 
@@ -243,7 +243,7 @@ func (p *Parser) getLesson(group models.Group, date string, timeslot int) []mode
 	elements.Each(
 		func(i int, s *goquery.Selection) {
 			//Получаем дату
-			date, err := time.Parse("02.01.2006", "20.12.2024")
+			date, err := time.Parse("02.01.2006", date)
 			if err != nil {
 				//log
 				return
@@ -266,9 +266,15 @@ func (p *Parser) getLesson(group models.Group, date string, timeslot int) []mode
 				subgroupNum = i + 1
 			}
 			// Парсим кафедру
+			var cathedraName string
 			cathedraStartIndex := strings.LastIndex(s.Text(), "(") + 1
 			cathedraEndIndex := strings.LastIndex(s.Text(), ")")
-			cathedraName := s.Text()[cathedraStartIndex:cathedraEndIndex]
+			if cathedraEndIndex == -1 {
+				// У преподавателей просто нет кафедры
+				cathedraName = "нет"
+			} else {
+				cathedraName = s.Text()[cathedraStartIndex:cathedraEndIndex]
+			}
 			cathedra := p.storage.SaveAndGetCathedraByName(context.TODO(), cathedraName)
 			// И корпус
 			buildingIndex := strings.Index(s.Text(), "корпус") - 2
@@ -299,8 +305,8 @@ func (p *Parser) getLesson(group models.Group, date string, timeslot int) []mode
 				})
 
 			var lesson = models.Lesson{
-				Id:   id,
-				Date: date,
+				ReaId: id,
+				Date:  date,
 				LessonTime: models.LessonTime{
 					Num: timeslot,
 				},
@@ -360,9 +366,25 @@ func (p *Parser) getScheduleForGroup(group models.Group, weekNum int) {
 func (p *Parser) GetSchedule() {
 	_, weekNum := time.Now().ISOWeek()
 	groups := p.storage.GetAllGroups(context.TODO())
+	weekNum += 18
+	var wg sync.WaitGroup
 	for _, group := range groups {
-		p.getScheduleForGroup(group, weekNum+20)
-		p.getScheduleForGroup(group, (weekNum+20)%53+1)
-		p.getScheduleForGroup(group, (weekNum+20)%53+2)
+		wg.Add(1)
+		go func(gr models.Group, wN int) {
+			defer wg.Done()
+			p.getScheduleForGroup(gr, wN)
+		}(group, weekNum)
+		wg.Add(1)
+		go func(gr models.Group, wN int) {
+			defer wg.Done()
+			p.getScheduleForGroup(gr, wN)
+		}(group, (weekNum)%53+1)
+		wg.Add(1)
+		go func(gr models.Group, wN int) {
+			defer wg.Done()
+			p.getScheduleForGroup(gr, wN)
+		}(group, (weekNum)%53+2)
+		wg.Wait()
 	}
+	log.Println("Получено всё расписание!")
 }

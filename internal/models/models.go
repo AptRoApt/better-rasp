@@ -54,6 +54,7 @@ type Discipline struct {
 }
 
 type Lesson struct {
+	ReaId        int
 	Id           int
 	Date         time.Time
 	LessonTime   LessonTime
