@@ -37,12 +37,6 @@ type Room struct {
 	Num         string
 }
 
-type LessonTime struct {
-	Num       int
-	StartTime time.Time
-	EndTime   time.Time
-}
-
 type LessonType struct {
 	Id   int
 	Name string
@@ -57,7 +51,7 @@ type Lesson struct {
 	ReaId        int
 	Id           int
 	Date         time.Time
-	LessonTime   LessonTime
+	LessonNum    int
 	LessonType   LessonType
 	Discipline   Discipline
 	Room         Room

@@ -305,11 +305,9 @@ func (p *Parser) getLesson(group models.Group, date string, timeslot int) []mode
 				})
 
 			var lesson = models.Lesson{
-				ReaId: id,
-				Date:  date,
-				LessonTime: models.LessonTime{
-					Num: timeslot,
-				},
+				ReaId:        id,
+				Date:         date,
+				LessonNum:    timeslot,
 				LessonType:   p.storage.GetLessonTypeByName(context.TODO(), lessonType),
 				Discipline:   p.storage.GetDisciplineByName(context.TODO(), s.Find("h5").Text()),
 				Room:         p.storage.SaveAndGetRoom(context.TODO(), buildingNum, room),
