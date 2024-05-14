@@ -33,3 +33,4 @@ SELECT lessons.id, disciplines.name, lesson_types.name, date,
        JOIN cathedras ON cathedra_id = cathedras.id
        WHERE building_num = $1 AND rooms.num = $2
        AND extract('week' from date) = $3;
+

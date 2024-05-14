@@ -1,50 +1,265 @@
-<style>
-    #expanderContent {
-        -moz-transition: height .5s;
-        -ms-transition: height .5s;
-        -o-transition: height .5s;
-        -webkit-transition: height .5s;
-        transition: height .5s;
-        height: 0;
-        overflow: hidden;
-    }
-</style>
-<form id="tNavigator" >
-    <div id="groupControls" class="row" style="padding-bottom: 2%">
-        <div class="col-sm-12 nopad">
-            <select class="form-control" name="Faculty">
-                <option  value="na">-факультет-</option>
- <option  value="Высшая инженерная школа &quot;Новые материалы и технологии&quot;">Высшая инженерная школа &quot;Новые материалы и технологии&quot;</option>  <option  value="Высшая школа кибертехнологий, математики и статистики">Высшая школа кибертехнологий, математики и статистики</option>  <option  value="Высшая школа креативных индустрий">Высшая школа креативных индустрий</option>  <option  value="Высшая школа менеджмента">Высшая школа менеджмента</option>  <option  value="Высшая школа права">Высшая школа права</option>  <option  value="Высшая школа социально-гуманитарных наук">Высшая школа социально-гуманитарных наук</option>  <option  value="Высшая школа финансов">Высшая школа финансов</option>  <option  value="Высшая школа экономики и бизнеса">Высшая школа экономики и бизнеса</option>  <option  value="Институт &quot;Первая Академия медиа&quot;">Институт &quot;Первая Академия медиа&quot;</option>  <option  value="институт математики, информационных систем и цифровой экономики">институт математики, информационных систем и цифровой экономики</option>  <option  value="Кафедра физического воспитания">Кафедра физического воспитания</option>  <option  value="специальный факультет талантливой молодежи &quot;Высшая школа &quot;Форсайт&quot;&quot;">специальный факультет талантливой молодежи &quot;Высшая школа &quot;Форсайт&quot;&quot;</option>  <option  value="факультет &quot;Плехановская школа бизнеса &quot;Интеграл&quot;">факультет &quot;Плехановская школа бизнеса &quot;Интеграл&quot;</option>  <option  value="факультет бизнеса &quot;КАПИТАНЫ&quot;">факультет бизнеса &quot;КАПИТАНЫ&quot;</option>  <option  value="Центр &quot;Русич&quot;">Центр &quot;Русич&quot;</option>             </select>
-        </div>
-        <div class="col-sm-3 nopad" style="padding-top: 1%">
-            <select class="form-control" name="Course">
-                <option  value="na">-курс-</option>
-            </select>
-        </div>
-        <div class="col-sm-3 nopad" style="padding-top: 1%">
-            <select class="form-control" name="Type">
-                <option  value="na">-уровень-</option>
-            </select>
-        </div>
-        <div class="col-sm-6 nopad" style="padding-top: 1%">
-            <select class="form-control" name="Group">
-                <option  value="na">-группа-</option>
-            </select>
-        </div>
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="static/raspcss.css">
+<title>Расписание</title>
+</head>
+<body>
+    <div id="pageTitle">
+    <h1 id="groupName"></h1>
+    <h2 id="weekNum"></h2>
     </div>
 
-    <div id="teacherControls" style="padding-bottom: 2%">
-        <div id="pnlSelectTeacher" class="row">
-            <div class="col-sm-12 nopad">
-                <select class="form-control" name="Cathedra">
-                    <option  value="na">-кафедра-</option>
- <option  value=""></option>  <option  value="Автоматизированных систем обработки информации и управления">Автоматизированных систем обработки информации и управления</option>  <option  value="Базовая кафедра &quot;Управление проектами и программами Capital Group&quot;">Базовая кафедра &quot;Управление проектами и программами Capital Group&quot;</option>  <option  value="Базовая кафедра &quot;Экономические и правовые экспертизы&quot; Союза судебных экспертов &quot;Экспертный совет&quot;">Базовая кафедра &quot;Экономические и правовые экспертизы&quot; Союза судебных экспертов &quot;Экспертный совет&quot;</option>  <option  value="Базовая кафедра АО &quot;Почта России&quot;">Базовая кафедра АО &quot;Почта России&quot;</option>  <option  value="Базовая кафедра Благотворительного фонда поддержки образовательных программ &quot;Капитаны&quot; &quot;Инновационный менеджмент и социальное предпринимательство&quot;">Базовая кафедра Благотворительного фонда поддержки образовательных программ &quot;Капитаны&quot; &quot;Инновационный менеджмент и социальное предпринимательство&quot;</option>  <option  value="Базовая кафедра бюджета и казначейства">Базовая кафедра бюджета и казначейства</option>  <option  value="Базовая кафедра индустрии детского питания">Базовая кафедра индустрии детского питания</option>  <option  value="Базовая кафедра компании 1С">Базовая кафедра компании 1С</option>  <option  value="Базовая кафедра Международных финансов, права и экономики развития малого бизнеса Йоркского Института Развития Предпринимательства (Канада)">Базовая кафедра Международных финансов, права и экономики развития малого бизнеса Йоркского Института Развития Предпринимательства (Канада)</option>  <option  value="Базовая кафедра торговой политики">Базовая кафедра торговой политики</option>  <option  value="Базовая кафедра Торгово-промышленной палаты РФ &quot;Управление человеческими ресурсами&quot;">Базовая кафедра Торгово-промышленной палаты РФ &quot;Управление человеческими ресурсами&quot;</option>  <option  value="Базовая кафедра управления инновационной и промышленной политикой">Базовая кафедра управления инновационной и промышленной политикой</option>  <option  value="Базовая кафедра Федеральной антимонопольной службы России">Базовая кафедра Федеральной антимонопольной службы России</option>  <option  value="Базовая кафедра финансового контроля и аудита главного контрольного управления г. Москвы">Базовая кафедра финансового контроля и аудита главного контрольного управления г. Москвы</option>  <option  value="Базовая кафедра финансового контроля, анализа и аудита Главного контрольного управления города Москвы">Базовая кафедра финансового контроля, анализа и аудита Главного контрольного управления города Москвы</option>  <option  value="Базовая кафедра финансовой и экономической безопасности">Базовая кафедра финансовой и экономической безопасности</option>  <option  value="Базовая кафедра химии и инновационных материалов и технологий">Базовая кафедра химии и инновационных материалов и технологий</option>  <option  value="Базовая кафедра цифровой экономики института развития информационного общества">Базовая кафедра цифровой экономики института развития информационного общества</option>  <option  value="Базовая кафедра цифровых технологий в государственном управлении ФГАУ НИИ &quot;Восход&quot;">Базовая кафедра цифровых технологий в государственном управлении ФГАУ НИИ &quot;Восход&quot;</option>  <option  value="Базовая кафедра экономики и права Роспатента">Базовая кафедра экономики и права Роспатента</option>  <option  value="Базовая кафедра экономического анализа и корпоративного управления производством и экспортом высокотехнологической продукции Гос-ной корп-ции &quot;Ростех&quot;">Базовая кафедра экономического анализа и корпоративного управления производством и экспортом высокотехнологической продукции Гос-ной корп-ции &quot;Ростех&quot;</option>  <option  value="Высшей математики">Высшей математики</option>  <option  value="Государственного и муниципального управления">Государственного и муниципального управления</option>  <option  value="Институт &quot;Первая Академия медиа&quot;">Институт &quot;Первая Академия медиа&quot;</option>  <option  value="ИПАМ">ИПАМ</option>  <option  value="Кафедра высшей математики">Кафедра высшей математики</option>  <option  value="Кафедра гостиничного и туристического бизнеса">Кафедра гостиничного и туристического бизнеса</option>  <option  value="Кафедра гостиничного и туристического менеджмента">Кафедра гостиничного и туристического менеджмента</option>  <option  value="Кафедра государственного и муниципального управления">Кафедра государственного и муниципального управления</option>  <option  value="Кафедра государственно-правовых и уголовно-правовых дисциплин">Кафедра государственно-правовых и уголовно-правовых дисциплин</option>  <option  value="Кафедра государственных и муниципальных финансов">Кафедра государственных и муниципальных финансов</option>  <option  value="Кафедра гражданско-правовых дисциплин">Кафедра гражданско-правовых дисциплин</option>  <option  value="Кафедра индустрии гостеприимства, туризма и спорта">Кафедра индустрии гостеприимства, туризма и спорта</option>  <option  value="Кафедра иностранных языков №1">Кафедра иностранных языков №1</option>  <option  value="Кафедра иностранных языков №2">Кафедра иностранных языков №2</option>  <option  value="Кафедра иностранных языков №3 ">Кафедра иностранных языков №3 </option>  <option  value="Кафедра информатики">Кафедра информатики</option>  <option  value="Кафедра истории и философии">Кафедра истории и философии</option>  <option  value="Кафедра корпоративного менеджмента">Кафедра корпоративного менеджмента</option>  <option  value="Кафедра маркетинга">Кафедра маркетинга</option>  <option  value="Кафедра математических методов в экономике">Кафедра математических методов в экономике</option>  <option  value="Кафедра международного бизнеса">Кафедра международного бизнеса</option>  <option  value="Кафедра менеджмента спорта и активного досуга">Кафедра менеджмента спорта и активного досуга</option>  <option  value="Кафедра мировой экономики">Кафедра мировой экономики</option>  <option  value="кафедра мировых финансов">кафедра мировых финансов</option>  <option  value="Кафедра мировых финансовых рынков и финтеха">Кафедра мировых финансовых рынков и финтеха</option>  <option  value="Кафедра национальной и региональной экономики">Кафедра национальной и региональной экономики</option>  <option  value="Кафедра пищевых технологий и биоинженерии">Кафедра пищевых технологий и биоинженерии</option>  <option  value="Кафедра политического анализа и социально-психологических процессов">Кафедра политического анализа и социально-психологических процессов</option>  <option  value="Кафедра политической экономии и истории экономической науки">Кафедра политической экономии и истории экономической науки</option>  <option  value="Кафедра политологии и социологии">Кафедра политологии и социологии</option>  <option  value="Кафедра предпринимательства и логистики">Кафедра предпринимательства и логистики</option>  <option  value="Кафедра прикладной информатики и информационной безопасности">Кафедра прикладной информатики и информационной безопасности</option>  <option  value="Кафедра психологии">Кафедра психологии</option>  <option  value="Кафедра рекламы, связей с общественностью и дизайна ">Кафедра рекламы, связей с общественностью и дизайна </option>  <option  value="Кафедра ресторанного бизнеса">Кафедра ресторанного бизнеса</option>  <option  value="Кафедра русского языка и культуры речи">Кафедра русского языка и культуры речи</option>  <option  value="Кафедра статистики">Кафедра статистики</option>  <option  value="Кафедра теории менеджмента и бизнес-технологий">Кафедра теории менеджмента и бизнес-технологий</option>  <option  value="Кафедра товарной экспертизы и таможенного дела">Кафедра товарной экспертизы и таможенного дела</option>  <option  value="Кафедра физического воспитания">Кафедра физического воспитания</option>  <option  value="Кафедра финансов и цен">Кафедра финансов и цен</option>  <option  value="Кафедра финансов устойчивого развития">Кафедра финансов устойчивого развития</option>  <option  value="Кафедра финансового менеджмента">Кафедра финансового менеджмента</option>  <option  value="Кафедра экономики промышленности">Кафедра экономики промышленности</option>  <option  value="Кафедра экономической теории">Кафедра экономической теории</option>  <option  value="ОНЦ &quot;Менеджмент&quot;">ОНЦ &quot;Менеджмент&quot;</option>  <option  value="Приглашенные преподаватели">Приглашенные преподаватели</option>  <option  value="факультет менеджмента">факультет менеджмента</option>                 </select>
-            </div>
-            <div class="col-sm-12 nopad" style="padding-top: 1%">
-                <select class="form-control" name="Teacher">
-                    <option  value="na">-преподаватель-</option>
-                </select>
-            </div>
-        </div>
-    </div>
-</form>
+    <form>
+        <input type="text" placeholder="Введите номер группы, ФИО преподавателя, номер аудитории">
+    </form>
+    <button class="image-button"></button>
+
+
+  <table class="day">
+      <thead>
+      <tr>
+        <td class="dayTitle" colspan="2">Понедельник, </td></tr>
+      <tr>
+      </thead>
+      <tbody>
+          <tr class="lesson">
+            <td class="lessonTime"><br></td><td class="lessonInfo"></td>
+            </tr>
+        <tr class="lesson">
+            <td class="lessonTime"></td><td class="lessonInfo"></td>
+            </tr>
+        <tr class="lesson">
+            <td class="lessonTime"></td><td class="lessonInfo"></td>
+            </tr>
+        <tr class="lesson">
+            <td class="lessonTime"></td><td class="lessonInfo"></td>
+            </tr>
+        <tr class="lesson">
+            <td class="lessonTime"></td><td class="lessonInfo"></td>
+            </tr>
+        <tr class="lesson">
+            <td class="lessonTime"></td><td class="lessonInfo"></td>
+            </tr>
+        <tr class="lesson">
+            <td class="lessonTime"></td><td class="lessonInfo"></td>
+            </tr>
+        <tr class="lesson">
+            <td class="lessonTime"></td><td class="lessonInfo"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <table class="day">
+        <thead>
+            <tr>
+              <td class="dayTitle" colspan="2">Вторник</td></tr>
+            <tr>
+            </thead>
+            <tbody>
+                <tr class="lesson">
+                  <td class="lessonTime"><br></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              </tbody>
+    </table>
+    <br>
+    <table class = "day">
+        <thead>
+            <tr>
+              <td class="dayTitle" colspan="2">Среда</td></tr>
+            <tr>
+            </thead>
+            <tbody>
+                <tr class="lesson">
+                  <td class="lessonTime"><br></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              </tbody>
+    </table>
+    <br>
+    <table class="day">
+        <thead>
+            <tr>
+              <td class="dayTitle" colspan="2">Четверг</td></tr>
+            <tr>
+            </thead>
+            <tbody>
+                <tr class="lesson">
+                  <td class="lessonTime"><br></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              </tbody>
+    </table>
+    <br>
+    <table class ="day">
+        <thead>
+            <tr>
+              <td class="dayTitle" colspan="2">Пятница</td></tr>
+            <tr>
+            </thead>
+            <tbody>
+                <tr class="lesson">
+                  <td class="lessonTime"><br></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              </tbody>
+    </table>
+    <br>
+    <table class="day">
+        <thead>
+            <tr>
+              <td class="dayTitle" colspan="2">Суббота</td></tr>
+            <tr>
+            </thead>
+            <tbody>
+                <tr class="lesson">
+                  <td class="lessonTime"><br></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              <tr class="lesson">
+                  <td class="lessonTime"></td><td class="lessonInfo"></td>
+                  </tr>
+              </tbody>
+    </table>
+    <script>
+        // Функция получения номера недели по РЭУ
+        function getCurrentReaWeek() {
+            const currentDate = new Date();
+            const januaryFirst = 
+                new Date(currentDate.getFullYear(), 0, 1);
+            const daysToNextMonday = 
+                (januaryFirst.getDay() === 1) ? 0 : 
+                (7 - januaryFirst.getDay()) % 7;
+            const nextMonday = 
+                new Date(currentDate.getFullYear(), 0, 
+                januaryFirst.getDate() + daysToNextMonday);
+        
+            const weekNum = (currentDate < nextMonday) ? 52 : 
+            (currentDate > nextMonday ? Math.ceil(
+            (currentDate - nextMonday) / (24 * 3600 * 1000) / 7) : 1);
+            return (weekNum - 34 <= 0) ? weekNum + 18 : weekNum - 34
+        }      
+        
+        // Функция задания начальных значений
+        function init() {
+            // Задаём номер недели по РЭУ
+            let weekNum = document.getElementById("weekNum")
+            weekNum.innerText = "Неделя " + getCurrentReaWeek();
+        }
+
+        function setLesson(lesson) {
+            
+        }
+
+        async function getScheduleForRoom(buildingNum, roomNum) {
+            const resp = await fetch("api/getScheduleForRoom/" + buildingNum + "/" + roomNum)
+            const lessons = await resp.json();
+            
+        }
+        // Выполняем первоначальную настройку
+        init()
+
+
+
+    </script>
+</body>
+</html>

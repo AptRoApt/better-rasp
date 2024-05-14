@@ -1,0 +1,97 @@
+body{ 
+    background-color: #DCDCDC;
+}
+.pageTitle {
+    background-color: #F5F5F5;
+}
+thead{
+    background-color: #F5F5F5;
+}
+tbody{
+    background-color: #F5F5F5;
+    }
+input{
+    width: 98%;
+    height: 20px;
+    margin-top: 5%;
+}
+@media screen and (max-width: 820px){
+.text{
+    text-align: center;
+    line-height: 1.0em;
+    margin-top: -1%;
+}
+.pageTitle {
+    height: 90px;
+    width: 100%;
+    border-radius: 20px;
+    
+}
+.image-button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    background-image: url('/static/filtr.png');
+    background-size: contain;
+    float: left;
+    margin-top: 5%;
+    border-radius: 10px;
+}
+table{
+    margin: auto;
+    text-align: center;
+    width: 400px;
+    height: 400px;
+    border: 0.5;
+    clear: left;
+}
+}
+@media screen and (max-width: 1200px) and (min-width: 821px){
+body{ 
+     background-color: #DCDCDC;
+}
+input{
+    width: 99%;
+    height: 20px;
+    margin-top: 5%;
+}
+
+.text{
+    text-align: center;
+    line-height: 1.0em;
+    margin-top: -1%;
+}
+.rectangle {
+    background-color: #F5F5F5;
+    height: 90px;
+    width: 100%;
+    border-radius: 20px;
+    
+}
+.image-button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    background-image: url('static/filtr.png');
+    background-size: contain;
+    float: left;
+    margin-top: 5%;
+    border-radius: 10px;
+}
+table{
+    margin: auto;
+    text-align: center;
+    width: 400px;
+    height: 400px;
+    border: 0.5;
+    clear: left;
+}
+thead{
+    background-color: #F5F5F5;
+}
+tbody{
+    background-color: #F5F5F5;
+    }
+.table2{
+    float:right;
+    }}
