@@ -516,7 +516,7 @@ async function getAndSetScheduleForRoom() {
 function getSchedule() {
     switch (optionSelector.value){
         case'1':
-        if (roomSelect.value != ""){
+        if (roomNums.value != ""){
             getAndSetScheduleForRoom();
         }
         break;
