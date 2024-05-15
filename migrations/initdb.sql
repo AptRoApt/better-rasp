@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS cathedras (
 
 CREATE TABLE IF NOT EXISTS teachers (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL
+    name TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS m2m_teachers_cathedras (
