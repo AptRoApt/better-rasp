@@ -4,20 +4,24 @@ import (
 	"better-rasp/internal/parser"
 	"better-rasp/internal/server"
 	"better-rasp/internal/storage"
+	"encoding/json"
+	"os"
 
 	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	//Подключение storage
-	//Запуск и настройка (время запуска) парсеров
-	//Запуск сервера
-	cfg := storage.Config{
-		Host:     "localhost",
-		Port:     5432,
-		User:     "postgres",
-		Password: "postgres",
-		DBName:   "rasp",
+	file, err := os.Open("config.json")
+	if err != nil {
+		panic("Невозможно открыть файл с конфигом")
+	}
+	defer file.Close()
+
+	var cfg storage.Config
+
+	decoder := json.NewDecoder(file)
+	if err := decoder.Decode(&cfg); err != nil {
+		panic("Ошибка при парсинге конфига.")
 	}
 	logger := logrus.New()
 	storage := storage.New(cfg, logger)
