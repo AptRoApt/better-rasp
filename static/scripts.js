@@ -449,7 +449,7 @@ function setDetails(lesson){
     time.innerHTML = `${getDayOfWeek(date)}, ${formatDate(lesson.Date)}, ${lesson.LessonNum} пара`
     let place = document.createElement("div");
     place.classList.add("place");
-    place.innerHTML = `Аудитория: ${lesson.Room.BuildingNum} корпус - ${lesson.Room.Num}`
+    place.innerHTML = `<b>Аудитория:</b> ${lesson.Room.BuildingNum} корпус - ${lesson.Room.Num}`
     let groups = document.createElement("div");
     groups.classList.add("groups");
     groups.innerHTML = "<b>Группа(ы):</b> "
