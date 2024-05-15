@@ -238,7 +238,12 @@ func (p *Parser) getLesson(group models.Group, date string, timeslot int) []mode
 	var lessons = make([]models.Lesson, 0, 2)
 
 	elements := doc.Find(".element-info-body")
-	withSubgroups := elements.Size() == 2
+	var withSubgroups bool
+	elements.Each(func(i int, s *goquery.Selection) {
+		if i > 0 {
+			withSubgroups = true
+		}
+	})
 
 	elements.Each(
 		func(i int, s *goquery.Selection) {

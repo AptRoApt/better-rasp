@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -145,7 +146,7 @@ func (s *Server) teacherListHandler(c *gin.Context) {
 }
 
 func (s *Server) searchHandler(c *gin.Context) {
-	query := c.Query("q")
+	query := strings.ToLower(c.Query("q"))
 
 	groups, teachers := s.storage.Search(query)
 

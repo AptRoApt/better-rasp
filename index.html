@@ -6,267 +6,64 @@
 </head>
 <body>
     <div id="pageTitle">
-    <h1 id="groupName"></h1>
-    <h2 id="weekNum"></h2>
+        <!-- <input id="search" type="text" placeholder="Введите номер группы или ФИО преподавателя"> -->
+        <form class="invisible search"  id="roomSearch"><select id="buildingNums" name="buildingNums">
+                <option value="" selected disabled hidden>Выберите корпус:</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </select> 
+            <select id="roomNums" name="roomNums"></select>  
+        </form>
+        <form class="invisible search" id="teacherSearch">
+        <select class="" id="cathedraSelect">
+            <option value="" selected disabled hidden>Выберите кафедру:</option>
+        </select>
+        <select id="teacherSelect">
+            <option value="" selected disabled hidden>Выберите преподавателяs:</option>
+        </select>
+         </form>
+         <form class="invisible search" id="groupSearch">
+            <select id="facultySelect">
+                <option value="" selected disabled hidden>Выберите факультет:</option>
+            </select>
+            <select id="courseSelect">
+                <option value="" selected disabled hidden>Выберите курс:</option>
+            </select>
+            <select id="educationTypeSelect">
+                <option value="" selected disabled hidden>Выберите тип обучения:</option>
+            </select>
+            <select id="groupSelect"></select>
+         </form>
+        <h2 id="weekNumHeader">Расписание на
+            <select id="weekNumSelect" name="weekNumSelect">
+            </select> 
+            неделю</h2>
+        <select id="optionSelector" name="optionSelector">
+            <option value = "" selected>Поиск:</option>
+            <option value = "1">По аудитории</option>
+            <option value = "2">По преподавателю</option>
+            <option value = "3">По группе</option>
+        </select>
     </div>
+    <div id="schedule">
 
-    <form>
-        <input type="text" placeholder="Введите номер группы, ФИО преподавателя, номер аудитории">
-    </form>
-    <button class="image-button"></button>
-
-
-  <table class="day">
-      <thead>
-      <tr>
-        <td class="dayTitle" colspan="2">Понедельник, </td></tr>
-      <tr>
-      </thead>
-      <tbody>
-          <tr class="lesson">
-            <td class="lessonTime"><br></td><td class="lessonInfo"></td>
-            </tr>
-        <tr class="lesson">
-            <td class="lessonTime"></td><td class="lessonInfo"></td>
-            </tr>
-        <tr class="lesson">
-            <td class="lessonTime"></td><td class="lessonInfo"></td>
-            </tr>
-        <tr class="lesson">
-            <td class="lessonTime"></td><td class="lessonInfo"></td>
-            </tr>
-        <tr class="lesson">
-            <td class="lessonTime"></td><td class="lessonInfo"></td>
-            </tr>
-        <tr class="lesson">
-            <td class="lessonTime"></td><td class="lessonInfo"></td>
-            </tr>
-        <tr class="lesson">
-            <td class="lessonTime"></td><td class="lessonInfo"></td>
-            </tr>
-        <tr class="lesson">
-            <td class="lessonTime"></td><td class="lessonInfo"></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <br>
-
-    <table class="day">
-        <thead>
-            <tr>
-              <td class="dayTitle" colspan="2">Вторник</td></tr>
-            <tr>
-            </thead>
-            <tbody>
-                <tr class="lesson">
-                  <td class="lessonTime"><br></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              </tbody>
-    </table>
-    <br>
-    <table class = "day">
-        <thead>
-            <tr>
-              <td class="dayTitle" colspan="2">Среда</td></tr>
-            <tr>
-            </thead>
-            <tbody>
-                <tr class="lesson">
-                  <td class="lessonTime"><br></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              </tbody>
-    </table>
-    <br>
-    <table class="day">
-        <thead>
-            <tr>
-              <td class="dayTitle" colspan="2">Четверг</td></tr>
-            <tr>
-            </thead>
-            <tbody>
-                <tr class="lesson">
-                  <td class="lessonTime"><br></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              </tbody>
-    </table>
-    <br>
-    <table class ="day">
-        <thead>
-            <tr>
-              <td class="dayTitle" colspan="2">Пятница</td></tr>
-            <tr>
-            </thead>
-            <tbody>
-                <tr class="lesson">
-                  <td class="lessonTime"><br></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              </tbody>
-    </table>
-    <br>
-    <table class="day">
-        <thead>
-            <tr>
-              <td class="dayTitle" colspan="2">Суббота</td></tr>
-            <tr>
-            </thead>
-            <tbody>
-                <tr class="lesson">
-                  <td class="lessonTime"><br></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              <tr class="lesson">
-                  <td class="lessonTime"></td><td class="lessonInfo"></td>
-                  </tr>
-              </tbody>
-    </table>
-    <script>
-
-        // Функция получения номера недели по РЭУ
-        function getCurrentReaWeek() {
-            const currentDate = new Date();
-            const januaryFirst = 
-                new Date(currentDate.getFullYear(), 0, 1);
-            const daysToNextMonday = 
-                (januaryFirst.getDay() === 1) ? 0 : 
-                (7 - januaryFirst.getDay()) % 7;
-            const nextMonday = 
-                new Date(currentDate.getFullYear(), 0, 
-                januaryFirst.getDate() + daysToNextMonday);
-        
-            const weekNum = (currentDate < nextMonday) ? 52 : 
-            (currentDate > nextMonday ? Math.ceil(
-            (currentDate - nextMonday) / (24 * 3600 * 1000) / 7) : 1);
-            return (weekNum - 34 <= 0) ? weekNum + 18 : weekNum - 34
-        }      
-        
-        // Функция задания начальных значений
-        function init() {
-            // Задаём номер недели по РЭУ
-            let weekNum = document.getElementById("weekNum")
-            weekNum.innerText = "Неделя " + getCurrentReaWeek();
-
-            // Задаём время пар     
-            const timetable = ['08:30:00 - 10:00:00','10:10:00 - 11:40:00',
-            '11:50:00 - 13:20:00', '14:00:00 - 15:30:00',
-            '15:40:00 - 17:10:00', '17:20:00 - 18:50:00',
-            '18:55:00 - 20:25:00', '20:30:00 - 22:00:00']
-        }
-
-        function setLesson(lesson) {
-            
-        }
-
-        async function getScheduleForRoom(buildingNum, roomNum) {
-            const resp = await fetch("api/getScheduleForRoom/" + buildingNum + "/" + roomNum)
-            const lessons = await resp.json();
-            
-        }
-        // Выполняем первоначальную настройку
-        init()
+    </div>
+    <div id="overlay" class="invisible">
+        <div id="details">
+            <span id="close-button">&times;</span>
+            <h2>Подробности</h2>
+        </div>
+    </div>
+    <button class="nav-button" id="prevWeek"><-</button>
+    <button class="nav-button" id="nextWeek">-></button>
 
 
-
-    </script>
+    <script src="static/scripts.js"></script>
 </body>
 </html>

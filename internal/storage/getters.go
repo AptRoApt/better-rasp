@@ -3,6 +3,7 @@ package storage
 import (
 	"better-rasp/internal/models"
 	"log"
+	"strings"
 )
 
 func (s *Storage) Search(someString string) ([]models.Group, []models.Teacher) {
@@ -11,10 +12,10 @@ func (s *Storage) Search(someString string) ([]models.Group, []models.Teacher) {
 						FROM groups
 						JOIN education_types ON education_type_id = education_types.id
 						JOIN faculties ON faculty_id = faculties.id
-						WHERE groups.name LIKE $1;`
+						WHERE LOWER(groups.name) LIKE $1;`
 	var foundGroups []models.Group
 	var foundTeachers []models.Teacher
-	rows, err := s.pool.Query(groupQuery, someString+"%")
+	rows, err := s.pool.Query(groupQuery, strings.ToLower(someString)+"%")
 	if err != nil {
 		log.Printf("Ошибка при поиске %s", err.Error())
 		return foundGroups, foundTeachers
@@ -128,7 +129,7 @@ func (s *Storage) GetLessonsByTeacherId(teacherId int, weekNum int) []models.Les
 	var lessons []models.Lesson
 	const lessonQuery = `SELECT lessons.id,  disciplines.id, disciplines.name,
 	lesson_types.id, lesson_types.name, date,
-	lesson_num, cathedras.id,
+	lesson_num, subgroup_num, cathedras.id, 
 	cathedras.name, rooms.id, rooms.building_num, rooms.num, is_commission
 	FROM lessons
 	JOIN lesson_types ON lesson_type_id = lesson_types.id
@@ -182,7 +183,7 @@ func (s *Storage) GetLessonsByTeacherId(teacherId int, weekNum int) []models.Les
 		err := lessonRows.Scan(&lesson.Id, &lesson.Discipline.Id,
 			&lesson.Discipline.Name, &lesson.LessonType.Id,
 			&lesson.LessonType.Name, &lesson.Date,
-			&lesson.LessonNum, &lesson.Cathedra.Id,
+			&lesson.LessonNum, &lesson.SubgroupNum, &lesson.Cathedra.Id,
 			&lesson.Cathedra.Name, &lesson.Room.Id, &lesson.Room.BuildingNum, &lesson.Room.Num, &lesson.IsCommission)
 		if err != nil {
 			log.Printf("Ошибка при получении расписания учителя: %s", err.Error())
@@ -234,7 +235,7 @@ func (s *Storage) GetLessonsByGroupId(groupId int, weekNum int) []models.Lesson 
 	const lessonQuery = `SELECT lessons.id,  disciplines.id, disciplines.name,
 	lesson_types.id, lesson_types.name, date,
 	lesson_num, cathedras.id,
-	cathedras.name, rooms.id, rooms.building_num, rooms.num, is_commission
+	cathedras.name, rooms.id, rooms.building_num, rooms.num, subgroup_num, is_commission
 	FROM lessons
 	JOIN lesson_types ON lesson_type_id = lesson_types.id
 	JOIN lesson_time ON lesson_num = lesson_time.num
@@ -288,7 +289,8 @@ func (s *Storage) GetLessonsByGroupId(groupId int, weekNum int) []models.Lesson 
 			&lesson.Discipline.Name, &lesson.LessonType.Id,
 			&lesson.LessonType.Name, &lesson.Date,
 			&lesson.LessonNum, &lesson.Cathedra.Id,
-			&lesson.Cathedra.Name, &lesson.Room.Id, &lesson.Room.BuildingNum, &lesson.Room.Num, &lesson.IsCommission)
+			&lesson.Cathedra.Name, &lesson.Room.Id, &lesson.Room.BuildingNum, &lesson.Room.Num,
+			&lesson.SubgroupNum, &lesson.IsCommission)
 		if err != nil {
 			log.Printf("Ошибка при получении расписания аудитории: %s", err.Error())
 			return lessons
@@ -339,7 +341,7 @@ func (s *Storage) GetLessonsByRoom(roomId int, weekNum int) []models.Lesson {
 	const lessonQuery = `SELECT lessons.id,  disciplines.id, disciplines.name,
 	lesson_types.id, lesson_types.name, date,
 	lesson_num, cathedras.id,
-	cathedras.name, rooms.id, rooms.building_num, rooms.num, is_commission
+	cathedras.name, rooms.id, rooms.building_num, rooms.num, subgroup_num, is_commission
 	FROM lessons
 	JOIN lesson_types ON lesson_type_id = lesson_types.id
 	JOIN lesson_time ON lesson_num = lesson_time.num
@@ -392,7 +394,8 @@ func (s *Storage) GetLessonsByRoom(roomId int, weekNum int) []models.Lesson {
 			&lesson.Discipline.Name, &lesson.LessonType.Id,
 			&lesson.LessonType.Name, &lesson.Date,
 			&lesson.LessonNum, &lesson.Cathedra.Id,
-			&lesson.Cathedra.Name, &lesson.Room.Id, &lesson.Room.BuildingNum, &lesson.Room.Num, &lesson.IsCommission)
+			&lesson.Cathedra.Name, &lesson.Room.Id, &lesson.Room.BuildingNum, &lesson.Room.Num,
+			&lesson.SubgroupNum, &lesson.IsCommission)
 		if err != nil {
 			log.Printf("Ошибка при получении расписания аудитории: %s", err.Error())
 			return lessons
@@ -535,7 +538,7 @@ func (s *Storage) GetFaculties() []models.Faculty {
 
 func (s *Storage) GetCourses(facultyId int) []int {
 	var courses []int
-	const query = "SELECT DISTINCT course FROM groups WHERE faculty_id = $1;"
+	const query = "SELECT DISTINCT course FROM groups WHERE faculty_id = $1 ORDER BY course ASC;"
 	rows, err := s.pool.Query(query, facultyId)
 	if err != nil {
 		log.Printf("Ошибка при получении факультетов: %s", err.Error())
