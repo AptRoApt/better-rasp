@@ -622,6 +622,11 @@ function activateForm() {
 async function setCathedras(){
     const cathedras = await getCathedras();
     cathedraSelect.innerHTML = '';
+    const option = document.createElement("option");
+    option.value = "";
+    option.selected = true;
+    option.textContent = "Выберите кафедру:"
+    cathedraSelect.appendChild(option);
     for (const cathedra of cathedras) {
         const option = document.createElement("option");
         option.value = cathedra.Id;
@@ -633,6 +638,11 @@ async function setCathedras(){
 async function setTeacherList() {
     const teachers = await getTeachers(cathedraSelect.value);
     teacherSelect.innerHTML = '';
+    const option = document.createElement("option");
+    option.value = "";
+    option.selected = true;
+    option.textContent = "Выберите преподавателя:"
+    teacherSelect.appendChild(option);
     for (const teacher of teachers) {
         const option = document.createElement("option");
         option.value = teacher.Id;
@@ -644,6 +654,11 @@ async function setTeacherList() {
 async function setFaculties() {
     const faculties = await getFaculties();
     facultySelect.innerHTML = '';
+    const option = document.createElement("option");
+    option.value = "";
+    option.selected = true;
+    option.textContent = "Выберите факультет:"
+    facultySelect.appendChild(option);
     for (const faculty of faculties) {
         const option = document.createElement("option")
         option.value = faculty.Id
@@ -655,6 +670,11 @@ async function setFaculties() {
 async function setCourses() {
     const courses = await getCourses(facultySelect.value);
     courseSelect.innerHTML = '';
+    const option = document.createElement("option");
+    option.value = "";
+    option.selected = true;
+    option.textContent = "Выберите курс:"
+    courseSelect.appendChild(option);
     for (const course of courses) {
         const option = document.createElement("option")
         option.value = course
@@ -666,6 +686,11 @@ async function setCourses() {
 async function setEducationTypes() {
     const educationTypes = await getEducationTypes(facultySelect.value, courseSelect.value);
     educationTypeSelect.innerHTML = '';
+    const option = document.createElement("option");
+    option.value = "";
+    option.selected = true;
+    option.textContent = "Выберите уровень обучения:"
+    educationTypeSelect.appendChild(option);
     for (const educationType of educationTypes) {
         const option = document.createElement("option")
         option.value = educationType.Id
@@ -677,6 +702,11 @@ async function setEducationTypes() {
 async function setGroupsList() {
     const groups = await getGroups(facultySelect.value, courseSelect.value, educationTypeSelect.value);
     groupSelect.innerHTML = '';
+    const option = document.createElement("option");
+    option.value = "";
+    option.selected = true;
+    option.textContent = "Выберите группу:"
+    groupSelect.appendChild(option);
     for (const group of groups) {
         const option = document.createElement("option")
         option.value = group.Id

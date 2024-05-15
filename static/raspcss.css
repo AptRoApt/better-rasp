@@ -58,6 +58,19 @@ body{
     border-top: 3px solid black;;
 }
 
+.search {
+    display: flex;   
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.search select {
+    flex-grow: 1;
+}
+
+
+
 .day>*{
     border-bottom: 3px solid black;
 }
