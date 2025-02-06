@@ -12,8 +12,8 @@ FROM alpine:latest
 WORKDIR /app
 
 COPY --from=builder /app/better-rasp .
-COPY --from=builder /app/static . 
-COPY --from=builder /app/migrations .
+COPY --from=builder /app/static /app/static
+COPY --from=builder /app/migrations /app/migrations
 
 EXPOSE 8080
 
