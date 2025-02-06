@@ -283,15 +283,22 @@ func (p *Parser) getLesson(group models.Group, date string, timeslot int) []mode
 			cathedra := p.storage.SaveAndGetCathedraByName(context.TODO(), cathedraName)
 			// И корпус
 			buildingIndex := strings.Index(s.Text(), "корпус") - 2
-			buildingNum, err := strconv.Atoi(s.Text()[buildingIndex : buildingIndex+1])
-			if err != nil {
-				//log
-				return
+			var buildingNum int
+			var room string
+			if buildingIndex < 0 {
+				buildingNum = 0
+				room = "-"
+			} else {
+				buildingNum, err = strconv.Atoi(s.Text()[buildingIndex : buildingIndex+1])
+				if err != nil {
+					//log
+					return
+				}
+				// И номер аудитории
+				delta := strings.Index(s.Text()[buildingIndex+25:], "\n")
+				room = s.Text()[buildingIndex+25 : buildingIndex+25+delta] // Там может быть Вебинар, так что это должна быть строка
+				// И айди пары.
 			}
-			// И номер аудитории
-			delta := strings.Index(s.Text()[buildingIndex+25:], "\n")
-			room := s.Text()[buildingIndex+25 : buildingIndex+25+delta] // Там может быть Вебинар, так что это должна быть строка
-			// И айди пары.
 			id, err := strconv.Atoi(s.Find(".task-id-display").Text()[5:])
 			if err != nil {
 				//logrus
