@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
@@ -15,12 +16,34 @@ type Config struct {
 	Port     int
 	User     string
 	Password string
-	DBName   string
+	Database string
+}
+
+func EnvConfig() Config {
+	host := os.Getenv("db_host")
+
+	portString := os.Getenv("db_port")
+
+	port, _ := strconv.Atoi(portString)
+
+	user := os.Getenv("db_user")
+
+	password := os.Getenv("db_password")
+
+	database := os.Getenv("db_database")
+
+	return Config{
+		Host:     host,
+		Port:     port,
+		User:     user,
+		Password: password,
+		Database: database,
+	}
 }
 
 func (c Config) String() string {
 	return fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		c.Host, c.Port, c.User, c.Password, c.DBName)
+		c.Host, c.Port, c.User, c.Password, c.Database)
 }
 
 type Storage struct {
@@ -30,7 +53,25 @@ type Storage struct {
 }
 
 func New(c Config, l *logrus.Logger) Storage {
-	if c.Host == "" || c.Port == 0 || c.User == "" || c.Password == "" || c.DBName == "" {
+	if c.Host == "" {
+		l.Info("переменная Host не установлена. установлено дефолтное значение")
+		c.Host = "localhost"
+	}
+	if c.Port == 0 {
+		l.Info("переменная Port не установлена. установлено дефолтное значение")
+		c.Port = 5432
+	}
+	if c.User == "" {
+		panic("Не задан пользователь СУБД!")
+	}
+	if c.Password == "" {
+		panic("Не задан пароль пользователя СУБД!")
+	}
+	if c.Database == "" {
+		panic("Не задано имя БД!")
+	}
+
+	if c.Host == "" || c.Port == 0 || c.User == "" || c.Password == "" || c.Database == "" {
 		panic("Пустые поля в конфиге для бд недопустимы.")
 	}
 

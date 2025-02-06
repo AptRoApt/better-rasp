@@ -4,7 +4,6 @@ import (
 	"better-rasp/internal/parser"
 	"better-rasp/internal/server"
 	"better-rasp/internal/storage"
-	"encoding/json"
 	"os"
 
 	"github.com/sirupsen/logrus"
@@ -17,12 +16,7 @@ func main() {
 	}
 	defer file.Close()
 
-	var cfg storage.Config
-
-	decoder := json.NewDecoder(file)
-	if err := decoder.Decode(&cfg); err != nil {
-		panic("Ошибка при парсинге конфига.")
-	}
+	var cfg storage.Config = storage.EnvConfig()
 	logger := logrus.New()
 	storage := storage.New(cfg, logger)
 	parser := parser.New(&storage)
