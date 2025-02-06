@@ -11,6 +11,7 @@ import (
 func main() {
 	var cfg storage.Config = storage.EnvConfig()
 	logger := logrus.New()
+	logger.Level = logrus.InfoLevel
 	storage := storage.New(cfg, logger)
 	parser := parser.New(&storage)
 	parser.Start()
