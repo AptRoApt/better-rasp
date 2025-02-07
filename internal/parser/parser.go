@@ -376,7 +376,7 @@ func (p *Parser) getScheduleForGroup(group models.Group, weekNum int) {
 func (p *Parser) GetSchedule() {
 	_, weekNum := time.Now().ISOWeek()
 	groups := p.storage.GetAllGroups(context.TODO())
-	weekNum += 18
+	weekNum += 17
 	var wg sync.WaitGroup
 	for _, group := range groups {
 		wg.Add(1)
