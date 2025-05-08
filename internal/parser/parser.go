@@ -1,3 +1,4 @@
+// TODO: обогати ошибки
 package parser
 
 import (
@@ -62,8 +63,8 @@ func New(s *storage.Storage) Parser {
 	return p
 }
 
-func (p *Parser) Start() {
-	p.GetGroups()
+func (p *Parser) Start(ctx context.Context) {
+	p.GetGroups(ctx)
 	go p.GetSchedule()
 	p.scheduler.Start()
 }
@@ -100,7 +101,7 @@ func (p *Parser) getElementsList(elementName string, data url.Values) ([]string,
 	return result, nil
 }
 
-func (p *Parser) getFacultiesGroups(faculty string) ([]models.Group, error) {
+func (p *Parser) getFacultiesGroups(ctx context.Context, faculty string) ([]models.Group, error) {
 	data := url.Values{
 		"Faculty":      {"na"},
 		"Course":       {"na"},
@@ -140,9 +141,9 @@ func (p *Parser) getFacultiesGroups(faculty string) ([]models.Group, error) {
 					facultyGroups,
 					models.Group{
 						Name:          group,
-						Faculty:       p.storage.SaveAndGetFaculty(faculty),
+						Faculty:       p.storage.SaveAndGetFaculty(ctx, faculty),
 						Course:        courseNum,
-						EducationType: p.storage.SaveAndGetEducationType(edType),
+						EducationType: p.storage.SaveAndGetEducationType(ctx, edType),
 					},
 				)
 			}
@@ -154,7 +155,7 @@ func (p *Parser) getFacultiesGroups(faculty string) ([]models.Group, error) {
 	return facultyGroups, nil
 }
 
-func (p *Parser) GetGroups() {
+func (p *Parser) GetGroups(ctx context.Context) {
 	// Получаем список факультетов
 	resp, err := p.client.Get("https://rasp.rea.ru/Schedule/Navigator")
 	if err != nil {
@@ -189,7 +190,7 @@ func (p *Parser) GetGroups() {
 		wg.Add(1)
 		go func(f string) {
 			defer wg.Done()
-			facultyGroups, err := p.getFacultiesGroups(f)
+			facultyGroups, err := p.getFacultiesGroups(ctx, f)
 			if err != nil {
 				log.Println(err)
 				return
@@ -203,7 +204,7 @@ func (p *Parser) GetGroups() {
 	wg.Wait()
 
 	for _, faculty := range faculties {
-		facultyGroups, err := p.getFacultiesGroups(faculty)
+		facultyGroups, err := p.getFacultiesGroups(ctx, faculty)
 		if err != nil {
 			log.Println(err)
 			return
@@ -309,7 +310,7 @@ func (p *Parser) getLesson(group models.Group, date string, timeslot int) []mode
 			var teachers = make([]models.Teacher, 0, 1)
 			s.Find("a").Each(
 				func(i int, s *goquery.Selection) {
-					teachers = append(teachers, p.storage.SaveAndGetTeacher(
+					teachers = append(teachers, p.storage.UpsertTeacher(
 						context.TODO(),
 						s.Text()[7:],
 						cathedra,
@@ -320,9 +321,9 @@ func (p *Parser) getLesson(group models.Group, date string, timeslot int) []mode
 				ReaId:        id,
 				Date:         date,
 				LessonNum:    timeslot,
-				LessonType:   p.storage.GetLessonTypeByName(context.TODO(), lessonType),
-				Discipline:   p.storage.GetDisciplineByName(context.TODO(), s.Find("h5").Text()),
-				Room:         p.storage.SaveAndGetRoom(context.TODO(), buildingNum, room),
+				LessonType:   p.storage.UpsertLessonType(context.TODO(), lessonType),
+				Discipline:   p.storage.UpsertDiscipline(context.TODO(), s.Find("h5").Text()),
+				Room:         p.storage.UpsertRoom(context.TODO(), buildingNum, room),
 				Teachers:     teachers,
 				Groups:       []models.Group{group},
 				SubgroupNum:  subgroupNum,

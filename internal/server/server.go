@@ -19,6 +19,8 @@ func New(s *storage.Storage) Server {
 }
 
 func (s *Server) Start() {
+	// TODO: Запускать сайт отдельно
+	// TODO: Refactor API
 	s.router.LoadHTMLFiles("index.html")
 	s.router.Static("/static", "static/")
 	s.router.GET("/", s.index)
